@@ -1,9 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics.Metrics;
+
 public class Prestito
 {
-    public Prestito( Cliente cliente, int totale, int rata, DateTime dataInizio, DateTime dataFine)
+    public Prestito(Cliente cliente, int totale, int rata, DateTime dataInizio, DateTime dataFine)
     {
+        
         ID = generaId();
         Cliente = cliente;
         Totale = totale;
@@ -12,9 +15,9 @@ public class Prestito
         DataFine = dataFine;
     }
 
-    int countId = 0;
-
-    public int ID { get; }
+    public static int countId = 0;
+    public int ID { get; set; }
+    
     public Cliente Cliente { get; }
     public int Totale { get; }
     public int Rata { get; }
@@ -25,7 +28,7 @@ public class Prestito
     {
         countId++;
         
-        return countId;
+        return ID = countId;
     }
 
 }

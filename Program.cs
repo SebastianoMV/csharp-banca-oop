@@ -12,7 +12,10 @@ BancaPopolare.Clienti.Add(new Cliente("Pippo", "de Pippi", "pppdppp", 20000));
 BancaPopolare.Clienti.Add(new Cliente("Ugo", "de Ugi", "gdgdgdgd", 30000));
 BancaPopolare.Clienti.Add(new Cliente("John", "Doe", "jhndoe", 10000));
 
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, DateTime.Today , DateTime.Today.AddMonths(5)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 2000, 500, new DateTime(2022, 6 , 15) , new DateTime(2022, 7, 15)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new DateTime(2022, 6, 15), new DateTime(2022, 12, 15)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today , DateTime.Today.AddMonths(5)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15), new DateTime(2022, 12, 15)));
 
 Console.WriteLine("Cosa vuoi fare? [clienti/prestiti]");
 string azione = Console.ReadLine();
@@ -33,9 +36,29 @@ if (azione == "clienti")
         CercaCliente();
     }
 
+}else if(azione == "prestiti")
+{
+    Console.WriteLine("Cosa vuoi fare? [cercare/aggiungere]");
+    string scelta = Console.ReadLine();
+    if (scelta == "cercare")
+    {
+        Console.WriteLine("Inserisci il codice fiscale del cliente");
+        string cf = Console.ReadLine();
+        SearchPrestito(cf);
+    }
+    else if (scelta == "modificare")
+    {
+        ModificaCliente();
+    }
+    else if (scelta == "cercare")
+    {
+        CercaCliente();
+    }
 }
 
 
+
+//CLIENTI
 
 void CercaCliente()
 {
@@ -113,24 +136,35 @@ void ModificaCliente()
 }
 
 
+//PRESTITI
+
 void SearchPrestito(string cf)
 {
-    Cliente clienteToSearch;
-    foreach (Cliente cliente in clienti)
-    {
-        if (cliente.CodiceFiscale == cf)
-        {
-            clienteToSearch = cliente;
-        }
-    }
 
+    int totalePrestiti = 0;
+    int rateDaPAgare = 0;
     foreach (Prestito prestito in prestiti)
     {
         if (prestito.Cliente.CodiceFiscale == cf)
         {
             Console.WriteLine("Prestito di " + prestito.Cliente.Nome);
             Console.WriteLine("Prestito numero " + prestito.ID);
+
+            int numeroRate = ((prestito.DataFine.Year - DateTime.Now.Year) * 12) + prestito.DataFine.Month - DateTime.Now.Month;
+            if(numeroRate > 0)
+            {
+                rateDaPAgare = numeroRate;
+            }
+            totalePrestiti += prestito.Totale;
+
+
         }
     }
+    
+    Console.WriteLine("Totale dei prestiti: " + totalePrestiti);
+    Console.WriteLine("Numero rate ancora da pagare: " + rateDaPAgare);
+
+
+
 }
 
