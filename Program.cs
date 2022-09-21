@@ -18,6 +18,8 @@ BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new
 BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today , DateTime.Today.AddMonths(2000/500)));
 BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15), new DateTime(2022, 7, 15).AddMonths(1000/100)));
 
+inizio:
+Console.WriteLine(" ");
 Console.WriteLine("Cosa vuoi fare? [clienti/prestiti]");
 string azione = Console.ReadLine();
 if (azione == "clienti")
@@ -36,8 +38,15 @@ if (azione == "clienti")
     {
         CercaCliente();
     }
+    else
+    {
+        Console.WriteLine("Errore");
+        goto inizio;
+    }
+    goto inizio;
 
-}else if(azione == "prestiti")
+}
+else if(azione == "prestiti")
 {
     Console.WriteLine("Cosa vuoi fare? [cercare/aggiungere]");
     string scelta = Console.ReadLine();
@@ -45,12 +54,14 @@ if (azione == "clienti")
     {
         string cf = Cf();
         SearchPrestito(cf);
+        goto inizio;
     }
     else if (scelta == "aggiungere")
     {
         string cf = Cf();
         AddPrestito(cf);
         SearchPrestito(cf);
+        goto inizio;
     }
     
 }
@@ -129,6 +140,7 @@ void ModificaCliente()
         else
         {
             Console.WriteLine("Cliente non trovato");
+            
         }
     }
 }
@@ -151,7 +163,7 @@ void SearchPrestito(string cf)
             int numeroRate = ((prestito.DataFine.Year - DateTime.Now.Year) * 12) + prestito.DataFine.Month - DateTime.Now.Month;
             if(numeroRate > 0)
             {
-                rateDaPAgare = numeroRate;
+                rateDaPAgare += numeroRate;
             }
             totalePrestiti += prestito.Totale;
 
@@ -161,6 +173,7 @@ void SearchPrestito(string cf)
     
     Console.WriteLine("Totale dei prestiti: " + totalePrestiti);
     Console.WriteLine("Numero rate ancora da pagare: " + rateDaPAgare);
+    
 
 }
 
