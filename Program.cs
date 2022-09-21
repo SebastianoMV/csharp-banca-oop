@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Collections.Generic;
+using System.Globalization;
 
 Console.WriteLine("BANCA");
 
@@ -12,10 +13,10 @@ BancaPopolare.Clienti.Add(new Cliente("Pippo", "de Pippi", "pppdppp", 20000));
 BancaPopolare.Clienti.Add(new Cliente("Ugo", "de Ugi", "gdgdgdgd", 30000));
 BancaPopolare.Clienti.Add(new Cliente("John", "Doe", "jhndoe", 10000));
 
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 2000, 500, new DateTime(2022, 6 , 15) , new DateTime(2022, 7, 15)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new DateTime(2022, 6, 15), new DateTime(2022, 12, 15)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today , DateTime.Today.AddMonths(5)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15), new DateTime(2022, 12, 15)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 2000, 500, new DateTime(2022, 6 , 15) , new DateTime(2022, 6, 15).AddMonths(2000 / 500)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new DateTime(2022, 6, 15), new DateTime(2022, 6, 15).AddMonths(5000/500)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today , DateTime.Today.AddMonths(2000/500)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15), new DateTime(2022, 7, 15).AddMonths(1000/100)));
 
 Console.WriteLine("Cosa vuoi fare? [clienti/prestiti]");
 string azione = Console.ReadLine();
@@ -42,18 +43,16 @@ if (azione == "clienti")
     string scelta = Console.ReadLine();
     if (scelta == "cercare")
     {
-        Console.WriteLine("Inserisci il codice fiscale del cliente");
-        string cf = Console.ReadLine();
+        string cf = Cf();
         SearchPrestito(cf);
     }
-    else if (scelta == "modificare")
+    else if (scelta == "aggiungere")
     {
-        ModificaCliente();
+        string cf = Cf();
+        AddPrestito(cf);
+        SearchPrestito(cf);
     }
-    else if (scelta == "cercare")
-    {
-        CercaCliente();
-    }
+    
 }
 
 
@@ -62,8 +61,8 @@ if (azione == "clienti")
 
 void CercaCliente()
 {
-    Console.WriteLine("Inserisci il Codice Fiscale del cliente da cercare");
-    string cf = Console.ReadLine();
+    
+    string cf = Cf();
     foreach (Cliente cliente in clienti)
     {
         if (cliente.CodiceFiscale == cf)
@@ -96,8 +95,7 @@ void AddCliente()
 
 void ModificaCliente()
 {
-    Console.WriteLine("Inserisci il Codice Fiscale del cliente da modificare");
-    string cf = Console.ReadLine();
+    string cf = Cf();
     foreach (Cliente cliente in clienti)
     {
         if (cliente.CodiceFiscale == cf)
@@ -164,7 +162,33 @@ void SearchPrestito(string cf)
     Console.WriteLine("Totale dei prestiti: " + totalePrestiti);
     Console.WriteLine("Numero rate ancora da pagare: " + rateDaPAgare);
 
+}
 
+void AddPrestito(string cf)
+{
+    
+    foreach(Cliente cliente in clienti)
+    {
+        if(cliente.CodiceFiscale == cf)
+        {
+            
+            Console.WriteLine("Inserisci il totale");
+            int newTotale = Int32.Parse(Console.ReadLine());
 
+            Console.WriteLine("Inserisci l'ammontare della rata");
+            int newRata = Int32.Parse(Console.ReadLine());
+
+            BancaPopolare.Prestiti.Add(new Prestito(cliente, newTotale, newRata, DateTime.Now, DateTime.Now.AddMonths(newTotale / newRata)));
+        }
+    }
+
+}
+
+static string Cf()
+{
+    Console.WriteLine("Inserisci il Codice Fiscale del cliente");
+    string cf = Console.ReadLine();
+
+    return cf;
 }
 
