@@ -14,7 +14,7 @@ public class Prestito
 
     int countId = 0;
 
-    int ID;
+    public int ID { get; }
     public Cliente Cliente { get; }
     public int Totale { get; }
     public int Rata { get; }
