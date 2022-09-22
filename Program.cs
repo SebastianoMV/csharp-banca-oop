@@ -13,10 +13,10 @@ BancaPopolare.Clienti.Add(new Cliente("Pippo", "de Pippi", "pppdppp", 20000));
 BancaPopolare.Clienti.Add(new Cliente("Ugo", "de Ugi", "gdgdgdgd", 30000));
 BancaPopolare.Clienti.Add(new Cliente("John", "Doe", "jhndoe", 10000));
 
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 2000, 500, new DateTime(2022, 6 , 15) , new DateTime(2022, 6, 15).AddMonths(2000 / 500)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new DateTime(2022, 6, 15), new DateTime(2022, 6, 15).AddMonths(5000/500)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today , DateTime.Today.AddMonths(2000/500)));
-BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15), new DateTime(2022, 7, 15).AddMonths(1000/100)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 2000, 500, new DateTime(2022, 6 , 15)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[0], 5000, 500, new DateTime(2022, 6, 15)));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[1], 2000, 500, DateTime.Today ));
+BancaPopolare.Prestiti.Add(new Prestito(BancaPopolare.Clienti[2], 1000, 100, new DateTime(2022, 7, 15)));
 
 inizio:
 Console.WriteLine(" ");
@@ -192,7 +192,7 @@ void AddPrestito(string cf)
             Console.WriteLine("Inserisci l'ammontare della rata");
             int newRata = Int32.Parse(Console.ReadLine());
 
-            BancaPopolare.Prestiti.Add(new Prestito(cliente, newTotale, newRata, DateTime.Now, DateTime.Now.AddMonths(newTotale / newRata)));
+            BancaPopolare.Prestiti.Add(new Prestito(cliente, newTotale, newRata, DateTime.Now));
         }
     }
 

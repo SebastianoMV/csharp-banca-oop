@@ -4,7 +4,7 @@ using System.Diagnostics.Metrics;
 
 public class Prestito
 {
-    public Prestito(Cliente cliente, int totale, int rata, DateTime dataInizio, DateTime dataFine)
+    public Prestito(Cliente cliente, int totale, int rata, DateTime dataInizio)
     {
         
         ID = generaId();
@@ -12,7 +12,7 @@ public class Prestito
         Totale = totale;
         Rata = rata;
         DataInizio = dataInizio;
-        DataFine = dataFine;
+        DataFine = Fine();
     }
 
     public static int countId = 0;
@@ -22,13 +22,19 @@ public class Prestito
     public int Totale { get; }
     public int Rata { get; }
     public DateTime DataInizio { get; }
-    public DateTime DataFine { get; }
+    public DateTime DataFine { get; set; }
 
     public int generaId()
     {
         countId++;
         
         return ID = countId;
+    }
+
+    public DateTime Fine()
+    {
+        DataFine = DataInizio.AddMonths(Totale / Rata);
+        return DataFine;
     }
 
 }
