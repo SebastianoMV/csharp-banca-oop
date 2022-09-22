@@ -78,8 +78,8 @@ void CercaCliente()
     {
         if (cliente.CodiceFiscale == cf)
         {
-            Console.Write("Nome cliente: " + cliente.Nome);
-            Console.Write(" - Cognome cliente: " + cliente.Cognome);
+            Console.Write(cliente.ToString());
+            
 
         }
     }
@@ -157,9 +157,12 @@ void SearchPrestito(string cf)
     {
         if (prestito.Cliente.CodiceFiscale == cf)
         {
-            Console.WriteLine(numeroPrestiti +  "° prestito di " + prestito.Cliente.Nome);
+            Console.Write(numeroPrestiti + "° prestito di  ");
+
+            Console.WriteLine(prestito.Cliente.ToString());
+            Console.WriteLine("Totale: " + prestito.Totale);
             numeroPrestiti++;
-            Console.WriteLine("      Codice Prestito: " + prestito.ID);
+            
 
             int numeroRate = ((prestito.DataFine.Year - DateTime.Now.Year) * 12) + prestito.DataFine.Month - DateTime.Now.Month;
             if(numeroRate > 0)
@@ -173,7 +176,7 @@ void SearchPrestito(string cf)
     }
     
     Console.WriteLine("Totale dei prestiti: " + totalePrestiti);
-    Console.Write("    Numero rate ancora da pagare: " + rateDaPAgare);
+    Console.WriteLine("Numero rate ancora da pagare: " + rateDaPAgare);
     
 
 }

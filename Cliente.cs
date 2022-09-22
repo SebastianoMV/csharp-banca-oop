@@ -15,4 +15,9 @@ public class Cliente
     public string CodiceFiscale { get; set; }
     public int Stipendio { get; set; }
 
+    public override string ToString()
+    {
+        return $"{Nome}  {Cognome}  {CodiceFiscale}  {Stipendio}";
+    }
+
 }
